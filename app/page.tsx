@@ -1,4 +1,4 @@
-import Modal from "@/public/modal";
+import Modal from "@/modal";
 
 export default function Home() {
   return (

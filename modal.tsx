@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import ModalProps from "@/@types/modalProps";
+import ModalProps from "@/modules/AuthForm/@types/modalProps";
 const Modal = ({ setIsOpen, isOpen }: ModalProps) => {
   return (
     <Dialog
