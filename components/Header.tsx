@@ -17,7 +17,7 @@ const Header = () => {
             animepoisk
           </div>
           {!isAuth ? (
-            <button onClick={() => setIsOpen(true)}>Зарегистрироваться</button>
+            <button className="bg-slate-800 text-white font-bold py-2 px-3 rounded-md" onClick={() => setIsOpen(true)}>Зарегистрироваться</button>
           ) : (
             <Link href="/user" className="header-user bg-black w-5 h-5"></Link>
           )}
