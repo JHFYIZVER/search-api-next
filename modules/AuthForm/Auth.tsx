@@ -1,21 +1,23 @@
+"use client";
 import modalProps from "./@types/modalProps";
 import Login from "./components/LoginForm";
 import Register from "./components/RegistrationForm";
 import { useForm } from "react-hook-form";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const ModalAuth = ({ isOpen, setIsOpen }: modalProps) => {
+const ModalAuth = ({ isOpen, setIsOpen, isRegistration }: modalProps) => {
   const { clearErrors, reset } = useForm();
-  const [isRegister, setIsRegister] = useState(true);
 
+  const router = useRouter();
   return (
     <Dialog
-      open={isOpen}
+      open={isOpen || true}
       onClose={() => {
         clearErrors();
         reset();
         setIsOpen(false);
+        router.push("/");
       }}
       transition
       className="fixed text-white inset-0 flex w-screen items-center justify-center bg-black/70 z-10 p-4 transition duration-300 ease-out data-[closed]:opacity-0"
@@ -24,35 +26,36 @@ const ModalAuth = ({ isOpen, setIsOpen }: modalProps) => {
         <DialogTitle className="font-bold text-black text-xl flex items-center gap-5">
           <span
             className={
-              isRegister ? "border-b cursor-pointer" : "cursor-pointer"
+              isRegistration ? "border-b cursor-pointer" : "cursor-pointer"
             }
             onClick={() => {
               clearErrors();
               reset();
-              setIsRegister(true);
+              router.push("/registration");
             }}
           >
             Регистрация
           </span>
           <span
             className={
-              !isRegister ? "border-b cursor-pointer" : "cursor-pointer"
+              !isRegistration ? "border-b cursor-pointer" : "cursor-pointer"
             }
             onClick={() => {
               clearErrors();
               reset();
-              setIsRegister(false);
+              router.push("/login");
             }}
           >
             Вход
           </span>
         </DialogTitle>
-        {isRegister ? <Register /> : <Login />}
+        {isRegistration ? <Register /> : <Login />}
         <svg
           onClick={() => {
             clearErrors();
             reset();
             setIsOpen(false);
+            router.push("/");
           }}
           className="absolute top-4 right-4 cursor-pointer"
           width="28"

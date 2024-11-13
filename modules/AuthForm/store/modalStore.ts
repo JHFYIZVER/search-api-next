@@ -6,7 +6,7 @@ type modalType = {
 };
 
 const useModalStore = create<modalType>()((set) => ({
-  isOpen: false,
+  isOpen: true,
   setIsOpen: (value) => set({ isOpen: value }),
 }));
 

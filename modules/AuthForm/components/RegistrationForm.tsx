@@ -12,6 +12,7 @@ const RegistrationForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<registerFormType>();
   const router = useRouter();
 
@@ -21,10 +22,11 @@ const RegistrationForm = () => {
     try {
       const response = await axios.post("/api/user", data);
       if (response.status === 200) {
-        router.push("/auth/login");
+        router.push("/login");
       } else {
         console.error("Registration failed");
       }
+      reset();
       return NextResponse.json(response.data);
     } catch (error) {
       return NextResponse.json(error);
@@ -59,9 +61,7 @@ const RegistrationForm = () => {
           placeholder="Email"
           {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
         />
-        <span>
-          {errors.email? "Поле обязательно для заполнения" : ""}
-        </span>
+        <span>{errors.email ? "Поле обязательно для заполнения" : ""}</span>
       </label>
       <label className="flex flex-col gap-1">
         <input
@@ -73,7 +73,7 @@ const RegistrationForm = () => {
           {...register("password", { required: true, minLength: 6 })}
         />
         <span>
-          {errors.password? "Пароль должен содержать не менее 6 символов" : ""}
+          {errors.password ? "Пароль должен содержать не менее 6 символов" : ""}
         </span>
       </label>
       <BtnSubmit title="Зарегистрироваться" />

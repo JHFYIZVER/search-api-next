@@ -1,6 +1,10 @@
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { loginFormType } from "../@types/formType";
 import BtnSubmit from "./BtnSubmit";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { userStore } from "@/app/(user)";
+
 const LoginForm = () => {
   const clazz =
     "input rounded-lg bg-[#EBEDF0] text-[#818C99] py-2 px-3 outline-none";
@@ -8,10 +12,29 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<loginFormType>();
+  const router = useRouter();
 
-  const submit: SubmitHandler<loginFormType> = (data: loginFormType) => {
-    console.log(data);
+  const { setIsAuth } = userStore();
+
+  const submit: SubmitHandler<loginFormType> = async (data: loginFormType) => {
+    const response = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    reset();
+
+    if (response?.error) console.log(response.error);
+
+    if (response?.ok) {
+      router.refresh();
+      router.push("/user");
+      setIsAuth(true);
+    }
+
+    console.log(response);
   };
 
   const error: SubmitErrorHandler<loginFormType> = (errors) => {
