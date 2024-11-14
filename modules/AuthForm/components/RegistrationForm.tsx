@@ -2,7 +2,7 @@ import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { registerFormType } from "../@types/formType";
 import BtnSubmit from "./BtnSubmit";
 import axios from "axios";
-
+import { useToast } from "@/hooks/use-toast";
 import { NextResponse } from "next/server";
 import { useRouter } from "next/navigation";
 const RegistrationForm = () => {
@@ -15,6 +15,7 @@ const RegistrationForm = () => {
     reset,
   } = useForm<registerFormType>();
   const router = useRouter();
+  const { toast } = useToast();
 
   const submit: SubmitHandler<registerFormType> = async (
     data: registerFormType
@@ -27,9 +28,14 @@ const RegistrationForm = () => {
         console.error("Registration failed");
       }
       reset();
+
       return NextResponse.json(response.data);
     } catch (error) {
-      return NextResponse.json(error);
+      toast({
+        title: "Ошибка регистрации",
+        description: "Что-то пошло не так",
+        variant: "destructive",
+      });
     }
   };
 

@@ -4,6 +4,7 @@ import BtnSubmit from "./BtnSubmit";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { userStore } from "@/app/(user)";
+import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
   const clazz =
@@ -15,6 +16,7 @@ const LoginForm = () => {
     reset,
   } = useForm<loginFormType>();
   const router = useRouter();
+  const { toast } = useToast();
 
   const { setIsAuth } = userStore();
 
@@ -26,11 +28,23 @@ const LoginForm = () => {
     });
     reset();
 
-    if (response?.error) console.log(response.error);
+    if (response?.error) {
+      toast({
+        title: "Ошибка входа",
+        description: "Что-то пошло не так",
+        variant: "destructive",
+      });
+    }
 
     if (response?.ok) {
+      toast({
+        title: "Успешный вход",
+        description: "Вы успешно вошли в аккаунт",
+        variant: "default",
+        duration: 2000,
+      });
+      router.push("/");
       router.refresh();
-      router.push("/user");
       setIsAuth(true);
     }
 

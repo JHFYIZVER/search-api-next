@@ -1,6 +1,6 @@
 import { db } from "@/app/lib/db";
 import { hash } from "bcrypt";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(request: Request) {
   try {
@@ -12,7 +12,8 @@ export async function POST(request: Request) {
     });
 
     if (isExistingUser) {
-      return NextResponse.json({ message: "User already exists" });
+      const error = new Error("User already exists");
+      throw error;
     }
 
     const hashPassword = await hash(password, 10);
@@ -28,6 +29,29 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ user: rest, message: "User created" });
   } catch (error) {
-    return NextResponse.json(error);
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const id = request.nextUrl.searchParams.get("id");
+    const userId: number = id ? parseInt(id) : (null as any);
+    const newUser = await db.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!newUser) {
+      const error = new Error("User not found");
+      throw error;
+    }
+
+    const { password: newUserPassword, ...rest } = newUser;
+
+    return NextResponse.json({ user: rest, message: "User found" });
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }

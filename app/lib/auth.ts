@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
         );
         if (!passwordMatch) return null;
         return {
-          id: `${existingUser.id}`,
+          id: existingUser.id,
           name: existingUser.name,
           email: existingUser.email,
         };
@@ -47,20 +47,22 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user }) {
       if (user) {
         return {
           ...token,
+          id: user.id,
           name: user.name,
         };
       }
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       return {
         ...session,
         user: {
           ...session.user,
+          id: token.id,
           name: token.name,
         },
       };
