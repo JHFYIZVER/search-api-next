@@ -20,10 +20,10 @@ const Header = async () => {
         {session?.user ? (
           <div className="flex gap-4">
             <Link
-              href={`/user/${session?.user?.id}`}
+              href={"/user/"}
               className="bg-slate-800 text-white font-bold py-2 px-3 rounded-md"
             >
-              Профиль
+              {session.user.name}
             </Link>
             <LogOutBtn />
           </div>

@@ -17,7 +17,6 @@ const LoginForm = () => {
   } = useForm<loginFormType>();
   const router = useRouter();
   const { toast } = useToast();
-
   const { setIsAuth } = userStore();
 
   const submit: SubmitHandler<loginFormType> = async (data: loginFormType) => {

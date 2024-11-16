@@ -38,6 +38,11 @@ export async function GET(request: NextRequest) {
   try {
     const id = request.nextUrl.searchParams.get("id");
     const userId: number = id ? parseInt(id) : (null as any);
+
+    if (!userId) {
+      const error = new Error("User not found");
+      throw error;
+    }
     const newUser = await db.user.findUnique({
       where: { id: userId },
     });
