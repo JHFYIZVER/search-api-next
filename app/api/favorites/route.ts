@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const id = request.nextUrl.searchParams.get("id");
-    const userId: number = id ? parseInt(id) : (null as any);
+    const userId: number | undefined = id ? parseInt(id) : undefined;
     const newUserFavorites = await db.favorites.findMany({
       where: { userId: userId },
     });
@@ -61,7 +61,7 @@ export async function DELETE(request: NextRequest) {
     const data = await request.json();
     const favoriteId = data.id;
     const id = request.nextUrl.searchParams.get("id");
-    const userId: number = id ? parseInt(id) : (null as any);
+    const userId: number | undefined = id ? parseInt(id) : undefined;
 
     const isExistingUser = await db.user.findUnique({
       where: { id: userId },

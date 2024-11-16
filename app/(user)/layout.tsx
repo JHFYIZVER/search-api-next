@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 
-interface Props {
+interface LayoutProps {
   children: ReactNode;
+  types: string[];
 }
 
-export default function AuthLayout({ children }: Props) {
+export default function AuthLayout({ children }: LayoutProps) {
   return <>{children}</>;
 }

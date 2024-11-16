@@ -6,4 +6,12 @@ type userType = {
   name: string;
 };
 
+export type userInfoProps = {
+  info: {
+    id: number;
+    name: string;
+    email: string;
+  };
+};
+
 export default userType;

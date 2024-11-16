@@ -8,55 +8,64 @@ export async function POST(request: Request) {
     const { name, email, password } = data;
 
     const isExistingUser = await db.user.findUnique({
-      where: { email: email },
+      where: { email },
     });
 
     if (isExistingUser) {
-      const error = new Error("User already exists");
-      throw error;
+      throw new Error("User already exists");
     }
 
     const hashPassword = await hash(password, 10);
 
     const newUser = await db.user.create({
       data: {
-        name: name,
-        email: email,
+        name,
+        email,
         password: hashPassword,
       },
     });
-    const { password: newUserPassword, ...rest } = newUser;
 
-    return NextResponse.json({ user: rest, message: "User created" });
-  } catch (error) {
-    console.log(error);
-    throw error;
+    const userResponse = { ...newUser } as { password?: string };
+    delete userResponse.password;
+
+    return NextResponse.json({ user: userResponse, message: "User created" });
+  } catch (error: unknown) {
+    console.error(error);
+
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+
+    return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
     const id = request.nextUrl.searchParams.get("id");
-    const userId: number = id ? parseInt(id) : (null as any);
+    const userId = id ? parseInt(id, 10) : null;
 
     if (!userId) {
-      const error = new Error("User not found");
-      throw error;
+      throw new Error("Invalid or missing user ID");
     }
-    const newUser = await db.user.findUnique({
+
+    const user = await db.user.findUnique({
       where: { id: userId },
     });
 
-    if (!newUser) {
-      const error = new Error("User not found");
-      throw error;
+    if (!user) {
+      throw new Error("User not found");
     }
 
-    const { password: newUserPassword, ...rest } = newUser;
+    const userResponse = { ...user } as { password?: string };
+    delete userResponse.password;
 
-    return NextResponse.json({ user: rest, message: "User found" });
-  } catch (error) {
-    console.log(error);
-    throw error;
+    return NextResponse.json({ user: userResponse, message: "User found" });
+  } catch (error: unknown) {
+    console.error(error);
+
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+
+    return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
 }
