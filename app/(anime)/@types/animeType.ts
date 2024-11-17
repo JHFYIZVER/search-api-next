@@ -1,25 +1,21 @@
-export type descriptionType = {
-  synopsis: string;
-};
-
-export type mainInfo = {
+export interface mainInfo {
   id: number;
   title: string;
-  mainPicture: {
+  main_picture: {
     large: string;
   };
   alternative_titles?: {
     en: string;
     ja: string;
-  };
+  }[];
   start_date: string;
   end_date?: string;
-  mean?: number;
+  mean?: number; // Add the "mean" property here
   popularity?: number;
-  nsfw?: boolean;
+  nsfw?: string;
   media_type?: string;
   status?: string;
-  genres?: number | string[];
+  genres?: number[] | string[];
   num_episodes?: number;
   start_season?: string;
   broadcast?: {
@@ -29,18 +25,24 @@ export type mainInfo = {
   source?: string;
   average_episode_duration?: number;
   rating?: string;
-  pictures?: string[];
-  recomendations?: [
-   
-  ];
   statistics?: {
-    status: {
+    status?: {
       watching: number;
       completed: number;
       on_hold: number;
       dropped: number;
       plan_to_watch: number;
     };
-    num_list_users: number;
-  };
+    num_list_users?: number;
+  }
+}
+
+export type recomendationsSwiperType = {
+  swiperInfo: {
+    id: number;
+    title: string;
+    main_picture: {
+      medium: string;
+    };
+  }[];
 };

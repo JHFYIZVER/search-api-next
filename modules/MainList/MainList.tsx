@@ -2,6 +2,7 @@ import MainListItem from "./components/MainListItem";
 import Pagination from "./components/Pagination";
 import axios from "axios";
 import SelecTrankingType from "./components/SelecTrankingType";
+
 export default async function MainList({
   offset,
   type,
@@ -22,7 +23,7 @@ export default async function MainList({
     }
 
     return (
-      <div>
+      <section>
         <h1 className="text-3xl font-bold pb-6">Поиск</h1>
         <SelecTrankingType currentOffset={offset} />
         <div className="flex flex-col gap-5">
@@ -31,7 +32,7 @@ export default async function MainList({
           ))}
         </div>
         <Pagination currentType={type} currentOffset={offset} />
-      </div>
+      </section>
     );
   } catch (error) {
     console.log(error);

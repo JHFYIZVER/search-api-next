@@ -1,5 +1,9 @@
 import axios from "axios";
 import React from "react";
+import SwiperRec from "../../components/SwiperRecommendations/SwiperRec";
+import Description from "../../components/Description";
+import MainInformation from "../../components/MainInformation";
+import Preloader from "@/components/Preloader";
 
 async function getTitle(id: string) {
   const animeData = await axios.get(
@@ -31,13 +35,16 @@ export default async function Page({ params }: { params: any }) {
     );
 
     if (animeData.status !== 200) {
-      return <div>Произошла ошибка при получении данныхываываыв</div>;
+      return <div>Произошла ошибка при получении данных</div>;
     }
 
-    console.log(animeData.data.recommendations);
-    
-
-    return <div>ыаываываыва</div>;
+    return (
+      <main className="max-w-[1000px] w-full">
+        <MainInformation data={animeData.data} />
+        <Description synopsis={animeData.data.synopsis} />
+        <SwiperRec swiperInfo={animeData.data.recommendations} />
+      </main>
+    );
   } catch (error) {
     console.log(error);
   }
