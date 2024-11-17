@@ -5,6 +5,7 @@ export async function GET(request: NextRequest) {
   try {
     const title = request.nextUrl.searchParams.get("title");
     const offset = request.nextUrl.searchParams.get("offset") || "0";
+    const type = request.nextUrl.searchParams.get("type") || "all";
     const id = request.nextUrl.searchParams.get("id");
 
     if (title) {
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
     }
 
     const response = await axios.get(
-      `${process.env.API_URL}/ranking?ranking_type=all&offset=${offset}&limit=10`,
+      `${process.env.API_URL}/ranking?ranking_type=${type}&offset=${offset}&limit=10&fields=genres,mean,start_date,studios`,
       {
         headers: {
           "X-MAL-CLIENT-ID": process.env.X_MAL_CLIENT_ID,
