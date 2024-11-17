@@ -11,7 +11,10 @@ export default async function MainList({
 }) {
   try {
     const animeData = await axios.get(
-      "http://localhost:3000/api/anime?offset=" + offset + "&type=" + type
+      "http://localhost:3000/api/anime/getList?offset=" +
+        offset +
+        "&type=" +
+        type
     );
 
     if (animeData.status !== 200) {
