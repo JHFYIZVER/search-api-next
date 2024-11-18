@@ -1,9 +1,21 @@
 import axios from "axios";
 import React from "react";
-import SwiperRec from "../../components/SwiperRecommendations/SwiperRec";
-import Description from "../../components/Description";
-import MainInformation from "../../components/MainInformation";
-import Preloader from "@/components/Preloader";
+import dynamic from "next/dynamic";
+
+const SwiperRec = dynamic(
+  () => import("../../components/SwiperRecommendations/SwiperRec"),
+  { ssr: true }
+);
+const Description = dynamic(() => import("../../components/Description"), {
+  ssr: true,
+});
+const MainInformation = dynamic(
+  () => import("../../components/MainInformation"),
+  {
+    ssr: true,
+    loading: () => <div>Загрузка...</div>,
+  }
+);
 
 async function getTitle(id: string) {
   const animeData = await axios.get(

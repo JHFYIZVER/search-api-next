@@ -1,7 +1,10 @@
-import MainListItem from "./components/MainListItem";
+
 import Pagination from "./components/Pagination";
 import axios from "axios";
 import SelecTrankingType from "./components/SelecTrankingType";
+import dynamic from "next/dynamic";
+
+const MainListItem = dynamic(() => import("./components/MainListItem"), { ssr: true });
 
 export default async function MainList({
   offset,

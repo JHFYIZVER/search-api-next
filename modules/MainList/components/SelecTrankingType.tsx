@@ -9,9 +9,11 @@ const SelecTrankingType = ({ currentOffset }: { currentOffset: number }) => {
       name="status"
       className="border bg-[#F5F5F5] py-3 px-5 text-center data-[hover]:shadow data-[focus]:bg-blue-100 w-full mb-4 rounded-xl font-semibold outline-none"
       aria-label="Project status"
-      onChange={(e) => router.push(`/?offset=${currentOffset}&type=${e.target.value}`)}
+      onChange={(e) =>
+        router.push(`/?offset=${currentOffset}&type=${e.target.value}`)
+      }
     >
-      <option selected disabled value="select">
+      <option value="select" disabled>
         Выберите категорию
       </option>
       <option value="all">Все</option>

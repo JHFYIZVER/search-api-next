@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -7,10 +8,13 @@ const MainListItem = ({ item }: { item: any }) => {
   return (
     <Link href={`/anime/${item.node.id}`} className="flex items-center gap-5">
       <div className="img-container relative">
-        <img
+        <Image
           className="rounded-2xl max-w-40"
           src={item.node.main_picture.large}
           alt="image"
+          loading="lazy"
+          width={160}
+          height={240}
         />
         <span className="absolute left-2 top-2 bg-[#2C2D2E] text-white rounded-lg py-1 px-2">
           {item.node.mean}

@@ -1,4 +1,4 @@
-import React from "react";
+import Image from "next/image";
 import { mainInfo } from "../@types/animeType";
 
 const MainInformation = ({ data }: { data: mainInfo }) => {
@@ -6,10 +6,13 @@ const MainInformation = ({ data }: { data: mainInfo }) => {
     <section className="mb-10">
       <div className="flex flex-wrap gap-7">
         <div className="img-container relative">
-          <img
-            className="max-w-xs w-full rounded-3xl"
+          <Image
+            className="max-w-xs w-full rounded-3xl h-[450px]"
             src={data.main_picture?.large}
             alt={data.title}
+            loading="lazy"
+            width={320}
+            height={450}
           />
           <span className="absolute left-4 top-4 bg-[#2C2D2E] text-white font-bold rounded-lg py-1 px-2">
             {data.mean}

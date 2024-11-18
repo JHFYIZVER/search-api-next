@@ -1,10 +1,10 @@
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { registerFormType } from "../@types/formType";
-import BtnSubmit from "./BtnSubmit";
-import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { NextResponse } from "next/server";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import BtnSubmit from "./BtnSubmit";
 const RegistrationForm = () => {
   const clazz =
     "input rounded-lg bg-[#EBEDF0] text-[#818C99] py-2 px-3 outline-none";

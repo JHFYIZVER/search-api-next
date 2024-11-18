@@ -1,15 +1,17 @@
 import { MainList } from "@/modules/MainList";
+import { useMemo } from "react";
 
-export default async function Home({
+export default function Home({
   searchParams,
 }: {
   searchParams: { offset?: string; type?: string };
 }) {
-  const offset = parseInt(searchParams.offset || "0", 10);
-  const type = searchParams.type || "all";
-  return (
-    <main>
-      <MainList type={type} offset={offset} />
-    </main>
-  );
+  const { offset = "0", type = "all" } = searchParams;
+  const offsetInt = parseInt(offset, 10);
+
+  const memoizedData = useMemo(() => {
+    return <MainList type={type} offset={offsetInt} />;
+  }, [type, offsetInt]); 
+
+  return <main>{memoizedData}</main>;
 }

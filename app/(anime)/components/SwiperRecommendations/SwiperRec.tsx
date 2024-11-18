@@ -1,31 +1,43 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { recomendationsSwiperType } from "../../@types/animeType";
+import { useMemo } from "react";
 import Link from "next/link";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "./style.css";
-import { recomendationsSwiperType } from "../../@types/animeType";
-
 const SwiperRec = ({ swiperInfo }: recomendationsSwiperType) => {
-  return (
+  const slides = useMemo(() => {
+    return swiperInfo.map((item: any) => (
+      <SwiperSlide key={item.node.id}>
+        <Link href={`/anime/${item.node.id}`}>
+          <img
+            className="max-w-xs h-[318px] max-h-[318px] rounded-lg"
+            src={item.node.main_picture.medium}
+            alt=""
+            loading="lazy"
+          />
+          <p className="text-lg font-medium">{item.node.title}</p>
+        </Link>
+      </SwiperSlide>
+    ));
+  }, [swiperInfo]);
+  return swiperInfo.length > 0 ? (
     <section>
-      <h2 className="text-2xl font-bold mb-5">Рекомендуем посмотреть</h2>
-      <Swiper slidesPerView={3} spaceBetween={30} className="mySwiper">
-        {swiperInfo.map((item: any) => (
-          <SwiperSlide key={item.node.id}>
-            <Link href={`/anime/${item.node.id}`}>
-              <img
-                className="max-w-xs h-[318px] max-h-[318px] rounded-lg"
-                src={item.node.main_picture.medium}
-                alt=""
-              />
-              <p className="text-lg font-medium">{item.node.title}</p>
-            </Link>
-          </SwiperSlide>
-        ))}
+      <h2 className="text-2xl font-bold mb-5">Рекомендации</h2>
+      <Swiper
+        slidesPerView={4}
+        spaceBetween={30}
+        pagination={{
+          clickable: true,
+        }}
+        className="swiper"
+      >
+        {slides}
       </Swiper>
     </section>
-  );
+  ) : null;
 };
 
 export default SwiperRec;
