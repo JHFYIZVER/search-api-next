@@ -3,7 +3,6 @@ import { loginFormType } from "../@types/formType";
 import BtnSubmit from "./BtnSubmit";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { userStore } from "@/app/(user)";
 import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
@@ -17,7 +16,6 @@ const LoginForm = () => {
   } = useForm<loginFormType>();
   const router = useRouter();
   const { toast } = useToast();
-  const { setIsAuth } = userStore();
 
   const submit: SubmitHandler<loginFormType> = async (data: loginFormType) => {
     const response = await signIn("credentials", {
@@ -44,7 +42,6 @@ const LoginForm = () => {
       });
       router.push("/");
       router.refresh();
-      setIsAuth(true);
     }
 
     console.log(response);
