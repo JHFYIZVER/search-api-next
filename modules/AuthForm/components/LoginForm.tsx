@@ -39,6 +39,7 @@ const LoginForm = () => {
         description: "Вы успешно вошли в аккаунт",
         variant: "default",
         duration: 2000,
+        style: { background: "green", color: "white" },
       });
       router.push("/");
       router.refresh();

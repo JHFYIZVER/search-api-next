@@ -13,7 +13,6 @@ const MainInformation = dynamic(
   () => import("../../components/MainInformation"),
   {
     ssr: true,
-    loading: () => <div>Загрузка...</div>,
   }
 );
 

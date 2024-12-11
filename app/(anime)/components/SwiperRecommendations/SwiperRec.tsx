@@ -10,12 +10,12 @@ import "./style.css";
 const SwiperRec = ({ swiperInfo }: recomendationsSwiperType) => {
   const slides = useMemo(() => {
     return swiperInfo.map((item: any) => (
-      <SwiperSlide key={item.node.id}>
-        <Link href={`/anime/${item.node.id}`}>
+      <SwiperSlide style={{width: "225px"}} key={item.node.id}>
+        <Link  href={`/anime/${item.node.id}`}>
           <img
             className="max-w-xs h-[318px] max-h-[318px] rounded-lg"
             src={item.node.main_picture.medium}
-            alt=""
+            alt="recomendation"
             loading="lazy"
           />
           <p className="text-lg font-medium">{item.node.title}</p>
@@ -27,11 +27,14 @@ const SwiperRec = ({ swiperInfo }: recomendationsSwiperType) => {
     <section>
       <h2 className="text-2xl font-bold mb-5">Рекомендации</h2>
       <Swiper
-        slidesPerView={4}
+        slidesPerView={"auto"}
+        freeMode={true}
         spaceBetween={30}
+        style={{ overflow: "hidden" }}
         pagination={{
           clickable: true,
         }}
+       
         className="swiper"
       >
         {slides}

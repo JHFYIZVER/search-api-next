@@ -16,6 +16,10 @@ const Header = async () => {
           <Image src={logo} alt="logo" width={50} height={30} />
           animepoisk
         </Link>
+        <nav className="flex gap-5">
+          <Link href="/">Главная</Link>
+          <Link href="/search">Поиск</Link>
+        </nav>
 
         {session?.user ? (
           <div className="flex gap-4">

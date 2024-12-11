@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
 
     if (title) {
       const response = await axios.get(
-        `${process.env.API_URL}?q=${title}&limit=20&offset=${offset}`,
+        `${process.env.API_URL}?q=${title}&limit=10&offset=${offset}&fields=genres,mean,start_date,studios`,
         {
           headers: {
             "X-MAL-CLIENT-ID": process.env.X_MAL_CLIENT_ID,

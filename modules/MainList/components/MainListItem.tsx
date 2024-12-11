@@ -1,20 +1,27 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
+import { Skeleton } from "@/components/UI/skeleton";
 
-const MainListItem = ({ item }: { item: any }) => {
+export default function ({ item }: { item: any }) {
   const year = new Date(item.node.start_date).getFullYear();
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <Link href={`/anime/${item.node.id}`} className="flex items-center gap-5">
+    <Link href={`/anime/${item.node.id}`} className="flex items-center gap-5 h-[240px]">
       <div className="img-container relative">
+        {isLoading && <Skeleton className="absolute top-0 left-0 w-[160px] h-[240px] rounded-2xl" />}
         <Image
-          className="rounded-2xl max-w-40"
+          className={`rounded-2xl max-w-40 ${
+            isLoading ? "opacity-0" : "opacity-100"
+          }`}
           src={item.node.main_picture.large}
           alt="image"
           loading="lazy"
           width={160}
           height={240}
+          onLoad={() => setIsLoading(false)}
         />
         <span className="absolute left-2 top-2 bg-[#2C2D2E] text-white rounded-lg py-1 px-2">
           {item.node.mean}
@@ -45,5 +52,3 @@ const MainListItem = ({ item }: { item: any }) => {
     </Link>
   );
 };
-
-export default MainListItem;
